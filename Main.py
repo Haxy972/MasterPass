@@ -2,7 +2,7 @@
 import string
 import random
 
-password_file = open("cache/password.txt", "w+")
+password_file = open("cache/password.yml")
 
 
 def get_random_password(length : int = 16):
@@ -16,12 +16,11 @@ def get_random_password(length : int = 16):
     
 def register_password(application_name : str,password : str):
     global password_file
-    text = application_name +": " + password
+    text = application_name +": \"" + password + "\""
     password_file.write(text)
     
     
-application = str(input("Vous voulez enregistrer un mot de passe pour quel application: "))
+application = str(input("Vous voulez enregistrer un mot de passe pour quelle application: "))
 password =  get_random_password()
 register_password(application, password)
-print("Voici votre mot de passe")
 print(application +": "+ password)
