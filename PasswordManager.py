@@ -22,8 +22,20 @@ def get_random_password(length: int = 16):
     return result
 
 
+def get_password(application_name: string):
+    yaml_file = yaml.safe_load(get_password_content())
+
+    if yaml_file is not None:
+        for dictionary in yaml.safe_load(get_password_content()):
+            for key, value in dictionary.items():
+                if key == application_name:
+                    return value
+
+    return None
+
+
 def register_password(application_name: str, password: str):
-    insertion = [{application_name.lower(): "\"" + password + "\""}]
+    insertion = [{application_name.lower(): password}]
     yaml.dump(insertion, get_password_file())
 
 
@@ -32,11 +44,22 @@ def get_all_applications():
     applications = []
 
     if yaml_file is not None:
-        for dictionary in yaml_file:
+        for dictionary in yaml.safe_load(get_password_content()):
             for key, value in dictionary.items():
                 applications.append(key)
 
     return applications
+
+
+def remove_application(application_name):
+    yaml_file = yaml.safe_load(get_password_content())
+    new_file = open("cache/password.yaml", "w+")
+    dictionary_list = []
+    for dictionary in yaml_file:
+        for key, value in dictionary.items():
+            if key != application_name:
+                dictionary_list.append(dictionary)
+    yaml.dump(dictionary_list, new_file)
 
 
 def contain_app(application: string):
