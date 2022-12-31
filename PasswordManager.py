@@ -63,7 +63,7 @@ def remove_application(application_name):
 
 
 def contain_app(application: string):
-    contain = False
+    contain = False 
     for applications in get_all_applications():
         if applications == application:
             contain = True
